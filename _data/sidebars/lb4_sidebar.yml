@@ -37,6 +37,10 @@ children:
   output: 'web, pdf'
   children:
 
+  - title: 'Server'
+    url: Server.html
+    output: 'web, pdf'
+
   - title: 'Sequence'
     url: Sequence.html
     output: 'web, pdf'

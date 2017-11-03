@@ -18,6 +18,7 @@ LoopBack 4 introduces some new concepts that are important to understand:
 - [**Dependency Injection**](Dependency Injection.html): Technique that separates the construction of dependencies of a class or function from its behavior, to keep the code loosely coupled.
 - [**Repository**](Repositories.html): Type of Service that represents a collection of data within a DataSource.
 - [**Decorator**](Decorators.html): Enables you to annotate or modify your class declarations and members with metadata.
+- [**Server**](Server.html): Placeholder.
 
 {% include note.html title="Review Note" content="_Perhaps this should include some of the material in <a href='Thinking-in-LoopBack.html'> Thinking in LoopBack</a>_.
 " %}
