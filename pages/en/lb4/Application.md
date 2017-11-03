@@ -16,12 +16,12 @@ controllers, servers and bindings. The `Application` class extends
 [Context](Context.html), and provides the controls for starting and stopping
 itself and its associated servers.
 
-When using LoopBack 4, we strongly encourage you to create your own child class
+When using LoopBack 4, we strongly encourage you to create your own subclass
 of `Application` to better organize your configuration and setup.
 
-## Making your own application
+## Making your own application class
 
-By making your own application instance, you can perform several additional
+By making your own application class, you can perform several additional
 tasks as a part of your setup:
 - Pass configuration into the base class constructor
 - Perform some asynchronous wireup before application start
@@ -41,8 +41,9 @@ export class WidgetApplication extends Application {
     super({
       components: [RestComponent],
     });
-    // You can bind to the Application-level context here.
     const app = this; // For clarity.
+    // You can bind to the Application-level context here.
+    // app.bind('foo').to(bar);
     app.controller(SamoflangeController);
     app.controller(DoohickeyController);
   }
@@ -181,15 +182,13 @@ const app = new Application({
 In the above example, the two server instances would be bound to the Application
 context under the keys `servers.public`, and `servers.private` respectively.
 
-
-
 ## Tips for application setup
 Here are some tips to help avoid common pitfalls and mistakes.
 
 ### Use unique bindings
 Use binding names that are prefixed with a unique string that does not overlap
 with loopback's bindings. As an example, if your application is built for
-your employer FooCorp, you can prefix your binding with `fooCorp`.
+your employer FooCorp, you can prefix your bindings with `fooCorp`.
 ```ts
 // This is unlikely to conflict with keys used by other component developers
 // or within loopback itself!
@@ -220,4 +219,3 @@ assumption that there will only be one instance of an `Application` class.
 By default, bindings for controllers will instantiate a new instance whenever
 they are injected or retrieved from their binding. Your application should only
 set singleton binding scopes on controllers when it makes sense to do so.
-
