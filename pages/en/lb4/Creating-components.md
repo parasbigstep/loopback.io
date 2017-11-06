@@ -306,3 +306,57 @@ class EmailComponent {
   }
 }
 ```
+
+## Creating your own servers 
+
+LoopBack 4 has the concept of a Server, which you can use to create your own
+implementations of REST, SOAP, gRPC, MQTT and more. For an overview, see the
+[Server](#Server.html) section.
+
+## A Basic Example
+The concept of servers in LoopBack doesn't actually require listening on ports;
+you can use this pattern to create workers that process data, write logs, or
+whatever you'd like.
+
+Let's create an example server. Note that this is not a complete example,
+for the purposes of brevity:
+
+```ts
+import {Server} from '@loopback/core';
+import {processReports} from '../util';
+export class ReportProcessingServer implements Server {
+  @inject('database') db: DefaultCrudRepository<Report, int>;
+  interval: NodeJS.Timer;
+  async start() {
+    // Run the report processor every 2 minutes.
+    interval = setInterval( async () => {
+      const results = await db.find({
+        createdDate: {
+          $gt: Date.now(),
+        },
+      });
+      if (results && results.length > 0) {
+        results.forEach(async (rep) => {
+          await db.updateById(rep.id, await processReport(rep));
+        }); 
+      }
+    }, 1000 * 120);
+    return Promise.resolve();
+  }
+
+  async stop() {
+    clearInterval(interval);
+    return Promise.resolve();
+  }
+}
+```
+
+<!--
+  - Basic servers
+    - Example
+    - Consuming it
+  - Advanced servers (the "real" kind)
+   - Controllers and Routing
+   - Example
+   - Consuming it
+-->
